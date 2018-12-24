@@ -1,0 +1,19 @@
+{
+    "detection": {       
+        "scale_factor": 1.5,
+        "min_neighbors": 5,
+        "skip_frames": 10,
+        "output": {
+            "directory": "./faces",
+            "format": "png",
+            "min_width": 64,
+            "min_height": 64
+        },
+        "classifiers": [
+            "C:/Users/janma/Documents/opencv/sources/data/haarcascades/haarcascade_frontalface_default.xml",
+            "C:/Users/janma/Documents/opencv/sources/data/haarcascades/haarcascade_profileface.xml",
+            "C:/Users/janma/Documents/opencv/sources/data/lbpcascades/lbpcascade_profileface.xml",
+            "C:/Users/janma/Documents/opencv/sources/data/lbpcascades/lbpcascade_frontalface_improved.xml"
+        ]
+    }
+}
