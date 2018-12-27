@@ -1,2 +1,3 @@
-from .config import Config
-from .actions import Detector
+from bragi.config import Config
+from bragi.components import Detector
+from bragi.image import Image

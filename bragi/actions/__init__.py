@@ -1,1 +1,1 @@
-from .detector import Detector
+from bragi.actions.detect import detect
