@@ -1,8 +1,6 @@
 TODO:
 =====
 
-- Upravit main tak, aby do faces vkládal výsledky ze všech detekci obličejů. Ne
-jen z prvního.
 - Upravit všechny skripty aby používaly sjednocené funkce a třídy
 - v datasets.py updavit ukládání do db, aby se do "folder" neukládala i cesta.
 Jen samotná složka.
@@ -11,6 +9,4 @@ Jen samotná složka.
 - Po detekci obličejů automaticky smazat malé obrázky (konfigurovatelné).
 - Po detekci obličejů automaticky roztřídit obličeje podle již roztříděných a
 umožnit potvrdit či zrušit.
-- Zvýšit počet přeskočených snímků při průchodu rozpoznávání (konfigurovatelné)
-- Načítání nastavení z INI souboru.
 - Vytvoření dokumentace a návodů.

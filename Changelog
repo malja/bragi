@@ -1,0 +1,9 @@
+27. 12. 2018
+============
+
+- Přidána třída Image
+- Přidána složka "classifiers" s cv2 klasifikátory, aby se nemuselo hledat jejich umístění závislé na systému.
+- Třída Detector přesunuta do bragi.components.
+- bragi.actions je teď pro jednotlivé funkce, které budou spuštěny v závislosti na parametru ACTION z příkazové řádky.
+- Přidány soubory Notes.txt a Changelog
+- Akce "detect" byla z main.py přesunuta do samostatné funkce "detect" v bragi.actions.detect
