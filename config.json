@@ -10,10 +10,10 @@
             "min_height": 64
         },
         "classifiers": [
-            "C:/Users/janma/Documents/opencv/sources/data/haarcascades/haarcascade_frontalface_default.xml",
-            "C:/Users/janma/Documents/opencv/sources/data/haarcascades/haarcascade_profileface.xml",
-            "C:/Users/janma/Documents/opencv/sources/data/lbpcascades/lbpcascade_profileface.xml",
-            "C:/Users/janma/Documents/opencv/sources/data/lbpcascades/lbpcascade_frontalface_improved.xml"
+            "./classifiers/haarcascade_frontalface_default.xml",
+            "./classifiers/haarcascade_profileface.xml",
+            "./classifiers/lbpcascade_profileface.xml",
+            "./classifiers/lbpcascade_frontalface_improved.xml"
         ]
     }
 }
