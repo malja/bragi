@@ -70,5 +70,5 @@ class Detection(pydantic.BaseModel):
     def classifiers_values(cls, value):
         for classifier in value:
             if not os.path.isfile(classifier):
-                raise("'classifiers' contains invalid path: {}".format(classifier))
+                raise FileNotFoundError("'classifiers' contains invalid path: {}".format(classifier))
         return value
