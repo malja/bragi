@@ -15,5 +15,8 @@
             "./classifiers/lbpcascade_profileface.xml",
             "./classifiers/lbpcascade_frontalface_improved.xml"
         ]
+    },
+    "recognition": {
+        "min_confidence": 50
     }
 }
