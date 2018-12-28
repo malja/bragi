@@ -7,3 +7,12 @@
 - bragi.actions je teď pro jednotlivé funkce, které budou spuštěny v závislosti na parametru ACTION z příkazové řádky.
 - Přidány soubory Notes.txt a Changelog
 - Akce "detect" byla z main.py přesunuta do samostatné funkce "detect" v bragi.actions.detect
+
+29. 12. 2018
+============
+
+- Přidána třída Recognizer
+- Přidána funkce recognize, která je volána pokud je spuštěna akce "recognize"
+- Přidána funkce require_optional_argument, kontrolující, zda byl argument předán, přestože je v argparse naznačen jako
+  optional.
+- Recognizer nyní načítá a ukládá data do XML modelu.
