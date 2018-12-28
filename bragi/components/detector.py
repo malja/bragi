@@ -3,6 +3,7 @@ import numpy as np
 import time
 import datetime
 import math
+import os
 
 from bragi import Config
 
@@ -84,7 +85,7 @@ class Detector:
 
             # cv2 detection works only on grayscale image
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            all_faces = []
+            all_faces_in_frame = []
 
             # Detect with all classifiers
             for classifier in self.classifiers:
@@ -96,12 +97,12 @@ class Detector:
                     if w < self.config.detection.output.min_width or h < self.config.detection.output.min_height:
                         continue
 
-                    all_faces.append(
+                    all_faces_in_frame.append(
                         frame[y:y+h, x:x+w]
                     )
 
-            if len(all_faces) != 0:
-                yield all_faces
+            if len(all_faces_in_frame) != 0:
+                yield all_faces_in_frame
 
 
 # ----
