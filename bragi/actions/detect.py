@@ -1,16 +1,8 @@
-import sys
-
-from bragi import Detector
+from bragi.components import Detector
 from bragi import Image
 
 
-def detect(args, config, parser):
-
-    if not args.video:
-        parser.print_usage()
-        print("{} error: the following arguments are required: --video".format(sys.argv[0]))
-        exit(1)
-
+def detect(args, config):
     try:
         with Detector(args.video, config) as detector:
             for faces in detector.detect():
@@ -26,3 +18,6 @@ def detect(args, config, parser):
 
     except Exception as e:
         print("Error: {}".format(e))
+        return False
+
+    return True
