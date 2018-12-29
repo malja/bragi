@@ -2,11 +2,24 @@ import argparse
 
 from bragi import Config
 from bragi.actions import detect, recognize
-from bragi.helpers import require_optional_arguments
+from bragi.argparse_helpers import CheckType, ArgumentTypePath, PathType
 
 parser = argparse.ArgumentParser(description="Detect and recognize faces in video files.")
-parser.add_argument("action", type=str, metavar="ACTION", choices=["detect", "recognize", "dataset"], help="What action to do. 'detect' will detect new faces in video. 'recognize' recognize faces in video based on dataset. 'dataset' create dataset from detected faces.")
-parser.add_argument("--video", dest="video", type=str, help="Path to input video file for detection or face recognition.")
+subparsers = parser.add_subparsers(title="Actions", dest="action", help="Which action should be run.")
+subparsers.required = True
+
+parser_detect = subparsers.add_parser("detect", help="Detect faces in provided video and save them into ./faces directory")
+parser_detect.add_argument("--video", dest="video", required=True, type=ArgumentTypePath(PathType.FILE, CheckType.EXISTS), help="Path to input video for face recognition.")
+
+parser_recognize = subparsers.add_parser("recognize", help="Recognize already known faces in provided video.")
+parser_recognize.add_argument("--video", dest="video", required=True, type=ArgumentTypePath(PathType.FILE, CheckType.EXISTS), help="Path to input video for face recognition.")
+
+parser_dataset = subparsers.add_parser("dataset", help="Operations with dataset.")
+subparsers_dataset = parser_dataset.add_subparsers(title="Operations", dest="operation", help="Which operation should be executed.")
+
+subparsers_dataset.add_parser("update", help="Attach detected faces to their owners.")
+subparsers_dataset.add_parser("train", help="Update or create model based on current dataset.")
+
 args = parser.parse_args()
 
 config = Config.parse_file("./config.json")
@@ -14,18 +27,9 @@ config = Config.parse_file("./config.json")
 return_status = True
 
 if args.action == "detect":
-    require_optional_arguments(["video"], args, parser)
     return_status = detect(args, config)
 
 elif args.action == "recognize":
-    require_optional_arguments(["video"], args, parser)
     return_status = recognize(args, config)
 
-else:
-    print("Unknown action.")
-    exit(1)
-
-if return_status:
-    exit(0)
-
-exit(1)
+exit(0 if return_status else 1)
