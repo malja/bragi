@@ -99,3 +99,6 @@ class Image:
             y=len(self._data[0]),
             dest=destination
         )
+
+    def toRawData(self):
+        return self._data
