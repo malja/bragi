@@ -40,6 +40,9 @@ class Detector:
         self.frames_count = 0               # Total number of frames in video
         self.frame_current = 0              # Current frame number
         self.duration = None                # Expected duration as string
+        self._video_position = 0            # Number of seconds since video beginning
+        self._video_fps = 0                 # FPS
+        self._video_duration = 0            # Video length in seconds
 
     def __enter__(self):
         if not os.path.isfile(self.input_video_path):
@@ -47,6 +50,8 @@ class Detector:
         
         self.video_capture = cv2.VideoCapture(self.input_video_path)
         self.frames_count = int(self.video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
+        self._video_fps = self.video_capture.get(cv2.cv.CV_CAP_PROP_FPS)
+        self._video_duration = float(self.frames_count) / float(self._video_fps)
 
         for classifier_path in self.config.detection.classifiers:
             self.classifiers.append(
@@ -60,6 +65,9 @@ class Detector:
 
     def __exit__(self, exception_type, value, traceback):
         self.video_capture.release()
+
+    def getCurrentPositionTime(self):
+        return self.frame_current / self.frames_count * self._video_duration
 
     def detect(self):
         # Read video if available
@@ -98,7 +106,7 @@ class Detector:
                         continue
 
                     all_faces_in_frame.append(
-                        frame[y:y+h, x:x+w]
+                        gray[y:y+h, x:x+w]
                     )
 
             if len(all_faces_in_frame) != 0:
