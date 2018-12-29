@@ -1,4 +1,4 @@
 STATUS:
 =======
 
-Netestováno: Image
+Netestováno

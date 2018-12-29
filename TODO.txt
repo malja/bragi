@@ -1,16 +1,16 @@
 TODO:
 =====
 
-- Ve třídě Recognizer upravit návratovou hodnotu z metody recognize() aby vracela třídu
-  Person (nutno vytvořit)
-- Přidat novou akci, která bude aktualizovat model.xml dle nových obrázků. Posléze upravit
-  třídu Recognizer, aby místo samostatného vytváření modelu volala tuto akci.
-- Vytvořit modely pro config.recognize
+- Přidat novou akci, která bude vytvářet model na základě datasetů
+- Přidat novou akci, která v rozpoznaných tvářích rozpozná shodné osoby a s prázdným jménem jim 
+  vytvoří dataset. Poté bude uživatel požádán, aby ručně tyto "automaticky" seskupené tváře někomu
+  přiřadil, nebo smazal.
+- Přidat do třídy Person metodu delete (smaže jak model v DB, tak dataset)
+
+- Promazat a vytvořit nový dataset, protože nyní se ukládají černobílé obličeje a počítá se s tím při
+  načítání
 
 - Upravit všechny skripty aby používaly sjednocené funkce a třídy
 - v datasets.py updavit ukládání do db, aby se do "folder" neukládala i cesta.
 Jen samotná složka.
-- Začlenit peewee (https://github.com/coleifer/peewee)
-- Po detekci obličejů automaticky roztřídit obličeje podle již roztříděných a
-umožnit potvrdit či zrušit.
 - Vytvoření dokumentace a návodů.

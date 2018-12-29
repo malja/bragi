@@ -8,7 +8,7 @@
 - Přidány soubory Notes.txt a Changelog
 - Akce "detect" byla z main.py přesunuta do samostatné funkce "detect" v bragi.actions.detect
 
-29. 12. 2018
+28. 12. 2018
 ============
 
 - Přidána třída Recognizer
@@ -16,3 +16,25 @@
 - Přidána funkce require_optional_argument, kontrolující, zda byl argument předán, přestože je v argparse naznačen jako
   optional.
 - Recognizer nyní načítá a ukládá data do XML modelu.
+
+29. 12. 2018
+============
+
+- Lepší parsování argumentů přes argparse. Už se nepoužívá funkce require_optional_argument.
+- Odstraněna funkce require_optional_argument
+- Přidány třídy ArgumentTypePath, CheckType, PathType pro kontrolu parametru typu cesty k souboru/složce.
+- Detector vrací černobílou fotku, takže není třeba ji v dalších krocích (např. při načítání při rozpoznání)
+  znovu převádět do černobílé.
+- Třída Detection přejmenována na DetectionModel
+- Přidána třída DetectionOutputModel
+- Parsování config.detection.output předáno novému modelu DetectionOutputModel
+- Přidána třída DetectionOutputFormat s dvěma formáty: PNG a JPEG.
+- Přidán model RecognitionModel
+- Začleněn peewee
+- Vytvořena třída PersonModel s využitím peewee
+- Přidána třída Person, která spravuje model v databázi a soubory v datasetu
+- Do třídy Detector přidána nová metoda getCurrentPositionTime, která vrací čas ve vteřinách od začátku videa
+- Akce "recognize" nyní vypisuje ID rozpoznané osoby a čas, ve kterém se osoba vyskytla
+- Přidána třída FaceRecognitionModel, která se stará o trénink, načítání a ukládání XML souboru s modelem
+- Třída Recognizer byla zjednodušena a používá pro manipulaci s modelem FaceRecognitionModel
+- Přidána třída Constants, která shromažďuje všechny konstanty, které se v bragi vyskytují
