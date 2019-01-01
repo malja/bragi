@@ -2,3 +2,16 @@ STATUS:
 =======
 
 Netestováno
+
+Adresářová struktura:
+=====================
+
+recognition/
+|-- faces/                      Detected faces which were not associated with any person
+|-- datasets/                   Contains directories with faces
+|   |-- person_<ID>/            Directory with faces of person with given ID
+|       |-- face_<ID>.png       Image with one particular face of person with given ID
+|-- classifiers/                List of used classifiers
+|-- model.xml                   Pre-trained model
+config.json                     bragi configuration
+database.db                     Database with all information

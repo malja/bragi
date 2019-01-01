@@ -2,8 +2,8 @@ import os
 import cv2
 import numpy as np
 
-from bragi import Image
-from bragi import Constants
+from bragi.image import Image
+from bragi.constants import Constants
 from bragi.database.models import PersonModel
 
 class FaceRecognitionModel(object):

@@ -1,5 +1,6 @@
 import os
 import cv2
+import shutil
 
 from bragi.database import PersonModel
 from bragi import Constants
@@ -19,14 +20,7 @@ class Person(object):
         if 0 != len(self._faces):
             return
     
-        face_files = [ 
-            item for item in os.listdir(
-                os.path.join(
-                    Constants.PATH_DATASET, 
-                    "person_{}".format(self.model.id)
-                )
-            )
-        ]
+        face_files = self.getFacePhotoFiles()
 
         self._faces = [ cv2.imread(face_file) for face_file in face_files ]
 
@@ -51,3 +45,31 @@ class Person(object):
         some faces are loaded.
         """
         return self._faces
+
+    def getFacePhotoFiles(self):
+        """
+        Return paths to all files in dataset of this person.
+        """
+
+        return [ 
+            item for item in os.listdir(
+                os.path.join(
+                    Constants.PATH_DATASET, 
+                    "person_{}".format(self.model.id)
+                )
+            )
+        ]
+
+    def delete(self):
+        """
+        Delete database record, dataset with associated faces. Model is not updated!
+        """
+        
+        shutil.rmtree(self.getDatasetDirectory())
+
+        self.model.delete()
+        self._faces = []
+        return None
+
+    def getDatasetDirectory(self):
+        return os.path.join(Constants.PATH_DATASET, "person_{}".format(self.model.id))

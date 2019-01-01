@@ -1,7 +1,7 @@
-from bragi.components import FaceRecognitionModel 
+from bragi.components.face_recognition_model import FaceRecognitionModel 
 from bragi.database import PersonModel
-from bragi import Constants
-from bragi import Image
+from bragi.constants import Constants
+from bragi.image import Image
 
 class Recognizer:
     def __init__(self, config):

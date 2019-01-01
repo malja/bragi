@@ -1,4 +1,4 @@
 import peewee
-from bragi import Constants
+from bragi.constants import Constants
 
-db = peewee.SqliteDatabase(Constants.PATH_DATASET_DATABASE)
+db = peewee.SqliteDatabase(Constants.FILE_DATABASE)

@@ -4,16 +4,16 @@
         "min_neighbors": 5,
         "skip_frames": 10,
         "output": {
-            "directory": "./faces",
+            "directory": "./recognition/faces",
             "format": "png",
             "min_width": 64,
             "min_height": 64
         },
         "classifiers": [
-            "./classifiers/haarcascade_frontalface_default.xml",
-            "./classifiers/haarcascade_profileface.xml",
-            "./classifiers/lbpcascade_profileface.xml",
-            "./classifiers/lbpcascade_frontalface_improved.xml"
+            "./recognition/classifiers/haarcascade_frontalface_default.xml",
+            "./recognition/classifiers/haarcascade_profileface.xml",
+            "./recognition/classifiers/lbpcascade_profileface.xml",
+            "./recognition/classifiers/lbpcascade_frontalface_improved.xml"
         ]
     },
     "recognition": {

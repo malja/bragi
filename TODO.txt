@@ -5,7 +5,6 @@ TODO:
 - Přidat novou akci, která v rozpoznaných tvářích rozpozná shodné osoby a s prázdným jménem jim 
   vytvoří dataset. Poté bude uživatel požádán, aby ručně tyto "automaticky" seskupené tváře někomu
   přiřadil, nebo smazal.
-- Přidat do třídy Person metodu delete (smaže jak model v DB, tak dataset)
 
 - Promazat a vytvořit nový dataset, protože nyní se ukládají černobílé obličeje a počítá se s tím při
   načítání

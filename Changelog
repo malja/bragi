@@ -38,3 +38,13 @@
 - Přidána třída FaceRecognitionModel, která se stará o trénink, načítání a ukládání XML souboru s modelem
 - Třída Recognizer byla zjednodušena a používá pro manipulaci s modelem FaceRecognitionModel
 - Přidána třída Constants, která shromažďuje všechny konstanty, které se v bragi vyskytují
+
+31. 12. 2018
+============
+
+- Přidána funkce parse_command_line_arguments, která pomocí argparse zpracuje parametry
+- Akce recognize nyní vytváří json soubor se seznamem rozpoznaných lidí a vteřin v rámci
+  videa, kde byla tvář rozpoznána.
+- Cesta ke konfiguračnímu souboru byla vložena ke konstantám jako FILE_CONFIG
+- Přidána metoda Person.delete, která smaže osobu z databáze a celý její dataset
+- Přidána akce dataset, která vytrénuje model z datasetu, nebo vytvoří datasety z obličejů ve ./faces

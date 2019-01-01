@@ -1,3 +1,44 @@
+import os
+import shutil
+
+from argparse import Namespace
+from bragi import Config, Constants, Image, Person
+from bragi.components import Recognizer, FaceRecognitionModel
+
+def dataset(args: Namespace, config: Config):
+    if args.operation == "update":
+        recognizer = Recognizer(config)
+        if not recognizer.setup():
+            return False
+
+        files = [ os.path.join(Constants.PATH_DATASET, name) for name in os.listdir(os.path.join(Constants.PATH_FACES)) ]
+        faces = [ Image(from_file=name).toRawData() for name in files ]
+
+        for index, face in enumerate(faces):
+            person_id = recognizer.recognize(face)
+
+            # Non-recognized person
+            if 0 == person_id: 
+                person = Person.create()
+
+            # Move file to dataset
+            destination = os.path.join(person.getDatasetDirectory(), files[index])
+            shutil.move(files[index], destination)
+
+            # Update XML model
+            if not FaceRecognitionModel.train():
+                return False
+            
+            if not recognizer.setup():
+                return False
+        
+        return True
+
+    if args.operation == "train":
+        return FaceRecognitionModel.train()
+
+
+"""
 import sqlite3
 import argparse
 import os
@@ -105,3 +146,4 @@ for face_file in face_files:
         os.remove(face_file_source)
 
     cv2.destroyAllWindows()
+"""

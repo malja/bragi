@@ -14,21 +14,21 @@ class DetectionOutputModel(pydantic.BaseModel):
     min_height: int = 64
     
     @pydantic.validator("directory")
-    def directory_exists(self, path):
+    def directory_exists(cls, path):
         if not os.path.isdir(path):
             os.mkdir(path)
         
         return path
 
-    @pydantic.validator("min_widht")
-    def min_width_range(self, width: int): 
+    @pydantic.validator("min_width")
+    def min_width_range(cls, width): 
         if 0 >= width:
             raise ValueError("'min_width' is out of range (0, inf)")
 
         return width
 
     @pydantic.validator("min_height")
-    def min_height_range(self, height: int):
+    def min_height_range(cls, height):
         if 0 >= height:
             raise ValueError("'min_height' out of range (0, inf)")
 
@@ -39,7 +39,7 @@ class DetectionModel(pydantic.BaseModel):
     scale_factor: float = 1.5
     min_neighbors: int = 5
     skip_frames: int = 10
-    output: dict = None
+    output: DetectionOutputModel = None
     classifiers: list = None
 
     @pydantic.validator("scale_factor")
