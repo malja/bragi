@@ -1,9 +1,11 @@
 import os
-import cv2
+from PIL import Image
 import shutil
+import uuid
 
 from bragi.database import PersonModel
 from bragi import Constants
+
 
 class Person(object):
     def __init__(self, id=None):
@@ -11,60 +13,25 @@ class Person(object):
 
         self._faces = []
 
-    def loadFaces(self):
-        """
-        Load faces from dataset files. If some faces are already loaded, returns True and does nothing.
-        If you want to update faces, create new person object.
-        """
-        # Update requires creating person again from ID
-        if 0 != len(self._faces):
-            return
-    
-        face_files = self.getFacePhotoFiles()
-
-        self._faces = [ cv2.imread(face_file) for face_file in face_files ]
-
     @staticmethod
-    def create(first_name = None, last_name = None):
+    def create(first_name=None, last_name=None):
         # Create DB record
-        person_id = PersonModel.create(first_name=first_name, last_name=last_name)
+        person = PersonModel.create(first_name=first_name, last_name=last_name)
 
         # Create dataset directory
         os.mkdir(
             os.path.join(
                 Constants.PATH_DATASET, 
-                "person_{}".format(person_id)
+                "person_{}".format(person.id)
             )
         )
 
-        return Person(id=person_id)
-
-    def getFaces(self):
-        """
-        Return loaded faces of this person. Method `loadFaces` should be called before this one, to make sure
-        some faces are loaded.
-        """
-        return self._faces
-
-    def getFacePhotoFiles(self):
-        """
-        Return paths to all files in dataset of this person.
-        """
-
-        return [ 
-            item for item in os.listdir(
-                os.path.join(
-                    Constants.PATH_DATASET, 
-                    "person_{}".format(self.model.id)
-                )
-            )
-        ]
+        return Person(id=person.id)
 
     def delete(self):
         """
         Delete database record, dataset with associated faces. Model is not updated!
         """
-        
         shutil.rmtree(self.getDatasetDirectory())
 
         self.model.delete()
@@ -73,3 +40,16 @@ class Person(object):
 
     def getDatasetDirectory(self):
         return os.path.join(Constants.PATH_DATASET, "person_{}".format(self.model.id))
+
+    def addRawFace(self, face, extension):
+        return Image.fromarray(face).save(
+            os.path.join(self.getDatasetDirectory(), "face_{}.{}".format(uuid.uuid4().hex, extension))
+        )
+
+    def addFaceFile(self, file_path):
+
+        if not os.path.exists(self.getDatasetDirectory()):
+            os.mkdir(self.getDatasetDirectory())
+
+        shutil.move(file_path, os.path.join(self.getDatasetDirectory(), os.path.basename(file_path)))
+        return True
