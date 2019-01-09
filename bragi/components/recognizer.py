@@ -1,21 +1,19 @@
-from bragi.components.face_recognition_model import FaceRecognitionModel 
-from bragi.database import PersonModel
+import numpy as np
+
 from bragi.constants import Constants
-from bragi.image import Image
+from bragi.components.face_recognition_model import FaceRecognitionModel
+
 
 class Recognizer:
     def __init__(self, config):
         self._config = config
-        self._face_recognizer = None
+        self._model = FaceRecognitionModel()
 
-    def setup(self):
-        try:
-            self._face_recognizer = FaceRecognitionModel.load()
-        except RuntimeError as e:
-            print(e)
-            return False
+    def updateOne(self, face, label):
+        return self._model.update(face, label)
 
-        return True
+    def save(self):
+        return self._model.save()
 
     def recognize(self, face):
         """
@@ -23,7 +21,7 @@ class Recognizer:
         In other cases, zero is returned to indicate miss-match.
         :returns: int
         """
-        face_id, confidence = self._face_recognizer.predict(face)
+        face_id, confidence = self._model.recognize(face)
                 
         if confidence < self._config.recognition.min_confidence:
             return 0

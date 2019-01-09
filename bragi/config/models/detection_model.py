@@ -6,6 +6,9 @@ class DetectionOutputFormat(enum.Enum):
     PNG = "png"
     JPEG = "jpg"
 
+    def __str__(self):
+        return str(self.value)
+
 
 class DetectionOutputModel(pydantic.BaseModel):
     directory: str = None

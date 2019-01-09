@@ -1,5 +1,3 @@
-import argparse
-
 from bragi import Config, Constants
 from bragi.actions import detect, recognize, dataset
 from bragi.argparse_helpers import parse_command_line_arguments
@@ -10,6 +8,7 @@ try:
     config = Config.parse_file(Constants.FILE_CONFIG)
 except Exception as e:
     print("Cannot load configuration. Error: {}".format(e))
+    exit(1)
 
 return_status = False
 

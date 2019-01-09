@@ -2,7 +2,7 @@
     "detection": {       
         "scale_factor": 1.5,
         "min_neighbors": 5,
-        "skip_frames": 10,
+        "skip_frames": 20,
         "output": {
             "directory": "./recognition/faces",
             "format": "png",

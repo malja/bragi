@@ -1,38 +1,91 @@
 import os
-import shutil
+import cv2
+from PIL import Image
+import numpy as np
 
 from argparse import Namespace
-from bragi import Config, Constants, Image, Person
-from bragi.components import Recognizer, FaceRecognitionModel
+from bragi import Config, Constants, Person
+from bragi.components import FaceRecognitionModel
+from bragi.database import PersonModel
+
+
+def dataset_update(args: Namespace, config: Config):
+    face_filenames = [os.path.join(Constants.PATH_FACES, file) for file in os.listdir(Constants.PATH_FACES)]
+    faces = [ np.array(Image.open(file).convert("L")) for file in face_filenames]
+
+    cv2.namedWindow("Face", cv2.WINDOW_NORMAL)
+    cv2.imshow("Face", faces[0])
+    cv2.waitKey(0)
+
+    while True:
+        face_name = input("Person name: ")
+        if 0 != len(face_name):
+            break
+
+    people = list(
+        PersonModel
+            .select(
+                PersonModel.id,
+                PersonModel.first_name,
+                PersonModel.last_name
+            )
+            .where(
+                PersonModel.first_name.contains(face_name) |
+                PersonModel.last_name.contains(face_name)
+            )
+            .limit(10)
+            .dicts()
+    )
+
+    if 0 == len(people):
+        print("No person with this name found.")
+        cv2.destroyAllWindows()
+        return False
+
+    for index, person in enumerate(people):
+        print("#{} - {} {}".format(index, person["first_name"], person["last_name"]))
+
+    selection = 0
+    while True:
+        try:
+            selection = int(input("Select person: "))
+            if selection < 0 or selection > len(people):
+                raise ValueError("Invalid input")
+            break
+        except Exception as e:
+            print("Invalid input. Try again.")
+
+    person = Person(id=people[selection]["id"])
+
+    num_of_faces = len(faces)
+
+    print("Press 'y' for adding face to '{} {}'".format(person.model.first_name, person.model.last_name))
+    print("Press 'x' deleting face. For example remove images without face.")
+    print("Press 'n' to skip this face. Assign it to different person later.")
+
+    for current_face_index, face in enumerate(faces):
+
+        print("Face: {}/{}                ".format(current_face_index, num_of_faces), end="\r")
+
+        cv2.imshow("Face", face)
+        key = cv2.waitKey(0)
+
+        if chr(key & 255) == "y":
+            person.addFaceFile(face_filenames[current_face_index])
+        elif chr(key & 255) == "n":
+            continue
+        elif chr(key & 255) == "x":
+            os.remove(face_filenames[current_face_index])
+
+        cv2.destroyAllWindows()
+
+    print("\nDone")
+    return True
+
 
 def dataset(args: Namespace, config: Config):
     if args.operation == "update":
-        recognizer = Recognizer(config)
-        if not recognizer.setup():
-            return False
-
-        files = [ os.path.join(Constants.PATH_DATASET, name) for name in os.listdir(os.path.join(Constants.PATH_FACES)) ]
-        faces = [ Image(from_file=name).toRawData() for name in files ]
-
-        for index, face in enumerate(faces):
-            person_id = recognizer.recognize(face)
-
-            # Non-recognized person
-            if 0 == person_id: 
-                person = Person.create()
-
-            # Move file to dataset
-            destination = os.path.join(person.getDatasetDirectory(), files[index])
-            shutil.move(files[index], destination)
-
-            # Update XML model
-            if not FaceRecognitionModel.train():
-                return False
-            
-            if not recognizer.setup():
-                return False
-        
-        return True
+        dataset_update(args, config)
 
     if args.operation == "train":
         return FaceRecognitionModel.train()

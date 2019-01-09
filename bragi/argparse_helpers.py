@@ -2,6 +2,7 @@ import argparse
 import os
 import enum
 
+
 class PathType(enum.Flag):
     """
     Define three path types, which might be check upon. Because PathType is Flag enum,
@@ -77,6 +78,7 @@ class ArgumentTypePath(object):
             raise argparse.ArgumentTypeError("Path type {} does not match requirements: {}.".format(path_type, self._type))
 
         return path
+
 
 def parse_command_line_arguments():
     """

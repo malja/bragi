@@ -4,18 +4,15 @@ import os
 from bragi import Person
 from bragi.components import Detector, Recognizer
 
+
 def recognize(args, config):
 
     recognizer = Recognizer(config)
-    if not recognizer.setup():
-        print("Error: Could not initialize recognizer.")
-        return False
-
     recognized_people = {}
 
-    try: 
+    try:
         with Detector(args.video, config) as detector:
-            for faces in detector.detect():
+            for faces in detector.detect(grayscale=True):
                 for face in faces:
 
                     person_id = recognizer.recognize(face)
@@ -31,7 +28,7 @@ def recognize(args, config):
         return False
 
     # Save recognized faces into JSON metadata file
-    with open(os.path.join(os.path.dirname(args.video), "metadata_{}.json".format(args.video))) as outfile:
+    with open(os.path.join(os.path.dirname(args.video), "metadata_{}.json".format(args.video)), "w") as outfile:
         json.dump({"people":recognized_people}, outfile)
 
     return True
