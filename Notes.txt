@@ -1,7 +1,10 @@
 STATUS:
 =======
 
-Netestováno
+bragi detect            Funguje
+bragi dataset update    Funguje
+bragi dataset train     Funguje
+bragi recognize         Funguje
 
 Adresářová struktura:
 =====================

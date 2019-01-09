@@ -1,15 +1,22 @@
 TODO:
 =====
 
-- Přidat novou akci, která bude vytvářet model na základě datasetů
-- Přidat novou akci, která v rozpoznaných tvářích rozpozná shodné osoby a s prázdným jménem jim 
+- Ucelit práci s osobami - Person a PersonModel by měly více spolupracovat, ideálně sloučit do jedné třídy
+- Upravit výstup z třídy Detect, aby bylo možné v reálném čase vypisovat postup i při rozpoznávání obličejů
+- Přidat novou akci, která v rozpoznaných tvářích rozpozná shodné osoby a s prázdným jménem jim
   vytvoří dataset. Poté bude uživatel požádán, aby ručně tyto "automaticky" seskupené tváře někomu
   přiřadil, nebo smazal.
+- Sloučit recognizer a recognition model
 
-- Promazat a vytvořit nový dataset, protože nyní se ukládají černobílé obličeje a počítá se s tím při
-  načítání
+- Místo manifestu přidat data do databáze. Aby se v nich lépe hledalo.
+- Ke každému souboru umožnit přidat datum, popis, místo.
+- Prohledané soubory přidat do jedné složky /movies
 
-- Upravit všechny skripty aby používaly sjednocené funkce a třídy
-- v datasets.py updavit ukládání do db, aby se do "folder" neukládala i cesta.
-Jen samotná složka.
+- Upravit záznam v databázi tak, aby u každé osoby bylo datum narození. Poté umožnit v manifestech hledat výskyt osoby,
+  kdy jí byl zadaný počet let.
+- Určit hlavní fotku pro každou osobu.
+- Vytvořit gui - třeba wxwidgets?
+
 - Vytvoření dokumentace a návodů.
+- Kontrola existence složek (nutno vytvořit), databáze (možnost resetovat) a datasetu (při vytváření modelu), modelu
+  (ve formě xml)

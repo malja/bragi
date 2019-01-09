@@ -48,3 +48,14 @@
 - Cesta ke konfiguračnímu souboru byla vložena ke konstantám jako FILE_CONFIG
 - Přidána metoda Person.delete, která smaže osobu z databáze a celý její dataset
 - Přidána akce dataset, která vytrénuje model z datasetu, nebo vytvoří datasety z obličejů ve ./faces
+
+09. 01. 2019
+============
+
+- Odstraněna třída Image, nahrazena z balíčku PIL
+- Ozkoušeny všechny funkce: recognize, detect, dataset
+- Soubor model.xml se vytváří ve složce recognition
+- Databáze přesunuta do hlavní složky.
+- Do tabulky "people" v databázi byl přidán sloupec image_count, který obsahuje počet obrázků, které se použily pro danou
+  osobu při tvorbě posledního modelu.
+-
